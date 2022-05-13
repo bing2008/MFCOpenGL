@@ -101,11 +101,11 @@ BOOL CMFCOpenGLTestDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
 
 	// TODO: 在此添加额外的初始化代码
-	//显示pic
-	GetDlgItem(IDC_OPENGL)->ShowWindow(SW_SHOW);
+	////不能显示pic 只是使用pic的rect
+	//GetDlgItem(IDC_OPENGL)->ShowWindow(SW_SHOW);
 
 	CRect rect;
-	HWND h = GetDlgItem(IDC_OPENGL)->GetSafeHwnd();//IDC_OPENGL
+	//HWND h = GetDlgItem(IDC_OPENGL)->GetSafeHwnd();//IDC_OPENGL
 
 	// Get size and position of the picture control
 	GetDlgItem(IDC_OPENGL)->GetWindowRect(rect);

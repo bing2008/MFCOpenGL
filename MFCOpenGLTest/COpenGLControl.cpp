@@ -119,6 +119,21 @@ void COpenGLControl::OnSize(UINT nType, int cx, int cy)
 	CWnd::OnSize(nType, cx, cy);
 
 	// TODO: 在此处添加消息处理程序代码
+	if (0 >= cx || 0 >= cy || nType == SIZE_MINIMIZED) return;
+
+	// Map the OpenGL coordinates.
+	glViewport(0, 0, cx, cy);
+
+	// Projection view
+	glMatrixMode(GL_PROJECTION);
+
+	glLoadIdentity();
+
+	// Set our current view perspective
+	gluPerspective(35.0f, (float)cx / (float)cy, 0.01f, 2000.0f);
+
+	// Model view
+	glMatrixMode(GL_MODELVIEW);
 }
 
 
@@ -126,9 +141,23 @@ void COpenGLControl::OnTimer(UINT_PTR nIDEvent)
 {
 	// TODO: 在此添加消息处理程序代码和/或调用默认值
 
+	switch (nIDEvent)
+	{
+	case 1:
+		glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		// Draw OpenGL scene
+		// oglDrawScene();
+
+		// Swap buffers
+		SwapBuffers(hdc);
+
+		break;
+	default:
+		break;
+	}
+
 	CWnd::OnTimer(nIDEvent);
-
-
-	glClearColor(0.8f, 0.3f, 0.3f, 1.0f);
 
 }
