@@ -9,6 +9,7 @@
 #endif
 
 #include "resource.h"		// 主符号
+#include "COpenGLControl.h"
 
 
 // CMFCOpenGLTestApp:
@@ -23,7 +24,6 @@ public:
 // 重写
 public:
 	virtual BOOL InitInstance();
-
 // 实现
 
 	DECLARE_MESSAGE_MAP()

@@ -65,6 +65,7 @@ BEGIN_MESSAGE_MAP(CMFCOpenGLTestDlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
+	ON_WM_SIZE()
 END_MESSAGE_MAP()
 
 
@@ -100,6 +101,23 @@ BOOL CMFCOpenGLTestDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
 
 	// TODO: 在此添加额外的初始化代码
+	//显示pic
+	GetDlgItem(IDC_OPENGL)->ShowWindow(SW_SHOW);
+
+	CRect rect;
+	HWND h = GetDlgItem(IDC_OPENGL)->GetSafeHwnd();//IDC_OPENGL
+
+	// Get size and position of the picture control
+	GetDlgItem(IDC_OPENGL)->GetWindowRect(rect);
+
+	// Convert screen coordinates to client coordinates
+	ScreenToClient(rect);
+	
+	// Create OpenGL Control window
+	m_oglWindow.oglCreate(rect, this);
+
+	// Setup the OpenGL Window's timer to render
+	m_oglWindow.m_unpTimer = m_oglWindow.SetTimer(1, 1, 0);
 
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
@@ -153,3 +171,33 @@ HCURSOR CMFCOpenGLTestDlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
+
+
+void CMFCOpenGLTestDlg::OnSize(UINT nType, int cx, int cy)
+{
+	CDialogEx::OnSize(nType, cx, cy);
+
+	// TODO: 在此处添加消息处理程序代码
+	switch (nType)
+	{
+	case SIZE_RESTORED:
+	{
+		if (m_oglWindow.m_bIsMaximized)
+		{
+			m_oglWindow.OnSize(nType, cx, cy);
+			m_oglWindow.m_bIsMaximized = false;
+		}
+
+		break;
+	}
+
+	case SIZE_MAXIMIZED:
+	{
+		m_oglWindow.OnSize(nType, cx, cy);
+		m_oglWindow.m_bIsMaximized = true;
+
+		break;
+	}
+	}
+
+}
