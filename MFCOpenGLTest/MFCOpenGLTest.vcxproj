@@ -44,7 +44,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
     <UseOfMfc>Dynamic</UseOfMfc>
   </PropertyGroup>
@@ -193,7 +193,6 @@
     <ClInclude Include="framework.h" />
     <ClInclude Include="MFCOpenGLTest.h" />
     <ClInclude Include="MFCOpenGLTestDlg.h" />
-    <ClInclude Include="CGLRenderer.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
@@ -202,7 +201,6 @@
     <ClCompile Include="COpenGLControl.cpp" />
     <ClCompile Include="MFCOpenGLTest.cpp" />
     <ClCompile Include="MFCOpenGLTestDlg.cpp" />
-    <ClCompile Include="CGLRenderer.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

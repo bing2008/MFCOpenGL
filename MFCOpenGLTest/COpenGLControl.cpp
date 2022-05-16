@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "COpenGLControl.h"
-//#include "gl/glew.h"
-//#include "gl/wglew.h"
+#include "gl/glew.h"
+#include "gl/wglew.h"
 #include <gl/gl.h>
 #include <gl/glu.h>
 
@@ -55,6 +55,48 @@ void COpenGLControl::oglInitialize(void)
 	// Create the OpenGL Rendering Context.
 	hrc = wglCreateContext(hdc);
 	wglMakeCurrent(hdc, hrc);
+
+	//added for opengl3.1 -bing
+	HGLRC tempContext = hrc;
+
+	GLenum err = glewInit();
+	if (GLEW_OK != err)
+	{
+		AfxMessageBox(_T("GLEW is not initialized!"));
+	}
+
+	int attribs[] =
+	{
+		WGL_CONTEXT_MAJOR_VERSION_ARB, 3,
+		WGL_CONTEXT_MINOR_VERSION_ARB, 1,
+		WGL_CONTEXT_FLAGS_ARB, 0,
+		0
+	};
+
+	if (wglewIsSupported("WGL_ARB_create_context") == 1)
+	{
+		hrc = wglCreateContextAttribsARB(hdc, 0, attribs);
+		wglMakeCurrent(NULL, NULL);
+		wglDeleteContext(tempContext);
+		wglMakeCurrent(hdc, hrc);
+	}
+	else
+	{	//It's not possible to make a GL 3.x context. Use the old style context (GL 2.1 and before)
+		hrc = tempContext;
+	}
+
+
+	//add ended
+
+	int OpenGLVersion[2];
+	glGetIntegerv(GL_MAJOR_VERSION, &OpenGLVersion[0]);
+	glGetIntegerv(GL_MINOR_VERSION, &OpenGLVersion[1]);
+
+	printf("OpenGL Version:%d.%d", OpenGLVersion[0], OpenGLVersion[1]);
+
+	//test
+	GLuint m_vaoID = 0;
+	glGenVertexArrays(2, &m_vaoID);
 
 	// Basic Setup:
 	//
